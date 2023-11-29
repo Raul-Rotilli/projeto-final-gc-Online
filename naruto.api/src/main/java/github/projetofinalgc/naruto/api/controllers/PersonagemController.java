@@ -3,6 +3,7 @@ import github.projetofinalgc.naruto.api.naruto.CharactersDTO;
 
 import github.projetofinalgc.naruto.api.services.CharactersService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -19,8 +20,9 @@ public class PersonagemController {
 
     }
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<CharactersDTO> addCharacter(@RequestBody CharactersDTO character) {
-        return charactersService.addCharacter(character);
+        return charactersService.criarPersonagem(character);
     }
     @PutMapping("/{id}")
     public Mono<CharactersDTO> atualizarPersonagem(@PathVariable Integer id, @RequestBody CharactersDTO characters) {
@@ -28,7 +30,7 @@ public class PersonagemController {
     }
     @DeleteMapping("/{id}")
     public Mono<Void> deleteCharacter(@PathVariable Integer id) {
-        return charactersService.deleteCharacter(id);
+        return charactersService.deletarPersonagem(id);
     }
 
 }

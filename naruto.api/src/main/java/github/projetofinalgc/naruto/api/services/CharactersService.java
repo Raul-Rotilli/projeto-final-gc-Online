@@ -39,11 +39,11 @@ public class CharactersService{
                 .bodyToMono(CharactersDTO.class);
     }
 
-    public Mono<CharactersDTO> addCharacter(CharactersDTO character) {
+    public Mono<CharactersDTO> criarPersonagem(CharactersDTO character) {
         listaPersonagens.add(character);
         return Mono.just(character);
     }
-    public Mono<Void> deleteCharacter(Integer id) {
+    public Mono<Void> deletarPersonagem(Integer id) {
         listaPersonagens.removeIf(character -> character.getId() == id);
 
         return Mono.empty();
@@ -52,29 +52,35 @@ public class CharactersService{
     public Mono<CharactersDTO> atualizarPersonagem(Integer id, CharactersDTO updatedCharacter) {
         return Mono.fromSupplier(() -> {
             // Encontrar o personagem pelo ID
-            CharactersDTO existingCharacter = listaPersonagens.stream()
+            CharactersDTO personagemExistente = listaPersonagens.stream()
                     .filter(character -> character.getId() == id)
                     .findFirst()
                     .orElse(null);
 
             // Se o personagem existir, atualize os dados
-            if (existingCharacter != null) {
+            if (personagemExistente != null) {
                 // Atualize os campos necessários
-                existingCharacter.setName(updatedCharacter.getName());
-                existingCharacter.setImages(updatedCharacter.getImages());
-                existingCharacter.setDebut(updatedCharacter.getDebut());
-                existingCharacter.setJutsu(updatedCharacter.getJutsu());
-                existingCharacter.setPersonal(updatedCharacter.getPersonal());
-                existingCharacter.setUniqueTraits(updatedCharacter.getUniqueTraits());
-                existingCharacter.setNatureType(updatedCharacter.getNatureType());
+                personagemExistente.setName(updatedCharacter.getName());
+                personagemExistente.setImages(updatedCharacter.getImages());
+                personagemExistente.setDebut(updatedCharacter.getDebut());
+                personagemExistente.setJutsu(updatedCharacter.getJutsu());
+                personagemExistente.setPersonal(updatedCharacter.getPersonal());
+                personagemExistente.setUniqueTraits(updatedCharacter.getUniqueTraits());
+                personagemExistente.setNatureType(updatedCharacter.getNatureType());
 
                 // Adicione mais campos conforme necessário
 
-                return existingCharacter;
+                return personagemExistente;
             } else {
                 // Se o personagem não existir, retorne null ou lance uma exceção, dependendo dos requisitos.
                 return null;
             }
         });
+    }
+
+    public int gerarNovoId() {
+        // Lógica para gerar um novo ID (pode ser um contador, uma lógica de geração única, etc.)
+        // Aqui, estou simplesmente incrementando um contador fictício.
+        return listaPersonagens.size() + 1;
     }
 }
