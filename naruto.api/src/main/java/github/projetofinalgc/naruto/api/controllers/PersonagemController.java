@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("naruto")
+@RequestMapping("/naruto")
 
 public class PersonagemController {
     CharactersService charactersService;
@@ -19,8 +19,22 @@ public class PersonagemController {
         return charactersService.getPersonagemById(id);
 
     }
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+@RequestMapping("naruto/name")
+    @GetMapping("/{name}")
+    public Mono<CharactersDTO> getPersonagemByName(@PathVariable String name) {
+
+        return charactersService.getPersonagemByName(name);
+
+    }
+
+    public Mono<CharactersDTO> getAllCharacthers(){
+        return charactersService.getAllCharacters();
+    }
+
+
+    // TODO
+   //@PostMapping
+    /*@ResponseStatus(HttpStatus.CREATED)
     public Mono<CharactersDTO> addCharacter(@RequestBody CharactersDTO character) {
         return charactersService.criarPersonagem(character);
     }
@@ -31,6 +45,6 @@ public class PersonagemController {
     @DeleteMapping("/{id}")
     public Mono<Void> deleteCharacter(@PathVariable Integer id) {
         return charactersService.deletarPersonagem(id);
-    }
+    }*/
 
 }

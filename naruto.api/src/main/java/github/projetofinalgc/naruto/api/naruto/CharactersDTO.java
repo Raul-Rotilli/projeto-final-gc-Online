@@ -3,14 +3,16 @@ package github.projetofinalgc.naruto.api.naruto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
 @Getter
 @Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@NoArgsConstructor
+@AllArgsConstructor
 public class CharactersDTO {
     private int id;
     private String name;
@@ -88,12 +90,6 @@ public class CharactersDTO {
     }
 
 
-    public String retornaDebut(){
-        if (debut != null) {
-            return debut.toString();
-        }
-        return "Debut não disponível";
-    }
 
     @Override
     public String toString() {
